@@ -1,7 +1,7 @@
-package com.blocksolid.retrofittutorial.API;
+package com.blocksolid.retrofittutorial.api;
 
 /**
  * Created by Dan Buckland on 26/10/2015.
  */
-public interface gitapi {
+public interface GitApi {
 }
