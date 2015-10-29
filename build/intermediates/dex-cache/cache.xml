@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/dan/Source/retrofit-tutorial/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="/Users/dan/Source/retrofit-tutorial/app/build/intermediates/pre-dexed/debug/classes-dc7cd020027394eb7d00de579891dbf4c06e006b.jar" />
+    </item>
+    <item
+        jar="/Users/dan/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit/retrofit/1.9.0/a681c044244d9fc375198588297a39ba78028423/retrofit-1.9.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="a681c044244d9fc375198588297a39ba78028423">
+        <dex dex="/Users/dan/Source/retrofit-tutorial/app/build/intermediates/pre-dexed/debug/retrofit-1.9.0-269bed3f4798045d47b20c99b37269ce1e0fe518.jar" />
+    </item>
+    <item
+        jar="/Users/dan/Source/retrofit-tutorial/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="/Users/dan/Source/retrofit-tutorial/app/build/intermediates/pre-dexed/debug/classes-7f70ff929912e35d0b47a913dbbc1bd6d66f3309.jar" />
+    </item>
+    <item
+        jar="/Users/dan/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3.1/ecb6e1f8e4b0e84c4b886c2f14a1500caf309757/gson-2.3.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="/Users/dan/Source/retrofit-tutorial/app/build/intermediates/pre-dexed/debug/gson-2.3.1-176b84589913feb9988568e0631501d3403cc218.jar" />
+    </item>
+    <item
+        jar="/Users/dan/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="/Users/dan/Source/retrofit-tutorial/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-a1e5b7bd46ac973e27064eee58ad9c873e954fae.jar" />
+    </item>
+    <item
+        jar="/Users/dan/Source/retrofit-tutorial/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/Users/dan/Source/retrofit-tutorial/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-4bfa83c95fb5474a6530a64ebad05ab790d0d39a.jar" />
+    </item>
+    <item
+        jar="/Users/dan/Source/retrofit-tutorial/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
+        <dex dex="/Users/dan/Source/retrofit-tutorial/app/build/intermediates/pre-dexed/debug/classes-84a812f885f757c954bfaaafc98f7f89b3985851.jar" />
+    </item>
+
+</items>
