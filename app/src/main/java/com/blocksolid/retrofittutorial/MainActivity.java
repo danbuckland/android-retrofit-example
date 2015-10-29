@@ -1,10 +1,7 @@
 package com.blocksolid.retrofittutorial;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,10 +20,10 @@ import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button click;
-    TextView tv;
-    EditText edit_user;
-    ProgressBar pbar;
+    Button searchBtn;
+    TextView responseText;
+    EditText editText;
+    ProgressBar progressBar;
     String API = "https://api.github.com";                         //BASE URL
 
     @Override
@@ -34,17 +31,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        click = (Button) findViewById(R.id.button);
-        tv = (TextView) findViewById(R.id.tv);
-        edit_user = (EditText) findViewById(R.id.edit);
-        pbar = (ProgressBar) findViewById(R.id.pb);
-        pbar.setVisibility(View.INVISIBLE);
+        searchBtn = (Button) findViewById(R.id.main_btn_lookup);
+        responseText = (TextView) findViewById(R.id.main_text_response);
+        editText = (EditText) findViewById(R.id.main_edit_username);
+        progressBar = (ProgressBar) findViewById(R.id.main_progress);
+        progressBar.setVisibility(View.INVISIBLE);
 
-        click.setOnClickListener(new View.OnClickListener() {
+        searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = edit_user.getText().toString();
-                pbar.setVisibility(View.VISIBLE);
+                String user = editText.getText().toString();
+                progressBar.setVisibility(View.VISIBLE);
 
                 //Retrofit section start from here...
                 RestAdapter restAdapter = new RestAdapter.Builder()
@@ -60,15 +57,15 @@ public class MainActivity extends AppCompatActivity {
                     public void success(GitModel GitModel, Response response) {
                         //we get json object from github server to our POJO or model class
 
-                        tv.setText("Github Name :" + GitModel.getName() + "\nWebsite :" + GitModel.getBlog() + "\nCompany Name :" + GitModel.getCompany());
+                        responseText.setText("Github Name :" + GitModel.getName() + "\nWebsite :" + GitModel.getBlog() + "\nCompany Name :" + GitModel.getCompany());
 
-                        pbar.setVisibility(View.INVISIBLE);                               //disable progressbar
+                        progressBar.setVisibility(View.INVISIBLE);                               //disable progressbar
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        tv.setText(error.getMessage());
-                        pbar.setVisibility(View.INVISIBLE);                               //disable progressbar
+                        responseText.setText(error.getMessage());
+                        progressBar.setVisibility(View.INVISIBLE);                               //disable progressbar
                     }
                 });
             }
@@ -86,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // automatically handle clicks on the Home/Up searchBtn, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 

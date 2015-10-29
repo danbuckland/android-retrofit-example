@@ -18,27 +18,30 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <EditText
-            android:id="@+id/edit"
+            android:id="@+id/main_edit_username"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:hint="@string/main_edit_hint"/>
+            android:hint="@string/main_edit_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button"
-            android:text="@string/main_btn_search"/>
+            android:id="@+id/main_btn_lookup"
+            android:text="@string/main_btn_lookup"/>
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ProgressBar
-            android:id="@+id/pb"
+            android:id="@+id/main_progress"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <TextView
-            android:id="@+id/tv"
+            android:id="@+id/main_text_response"
             android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
