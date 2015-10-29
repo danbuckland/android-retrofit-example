@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     TextView responseText;
     EditText editText;
     ProgressBar progressBar;
-    String API = "https://api.github.com";                         //BASE URL
+    String API = "https://api.github.com"; //BASE URL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,29 +43,33 @@ public class MainActivity extends AppCompatActivity {
                 String user = editText.getText().toString();
                 progressBar.setVisibility(View.VISIBLE);
 
-                //Retrofit section start from here...
-                RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint(API).build();                                        //create an adapter for retrofit with base url
+                //Retrofit section starts here...
+                //Create an adapter for retrofit with base url
+                RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(API).build();
 
-                GitApi git = restAdapter.create(GitApi.class);                            //creating a service for adapter with our GET class
+                //Create a service for adapter using the GET class
+                GitApi git = restAdapter.create(GitApi.class);
 
-                //Now ,we need to call for response
-                //Retrofit using gson for JSON-POJO conversion
-
+                //Make a request to get a response
+                //Get json object from GitHub server to the POJO/model class
                 git.getFeed(user, new Callback<GitModel>() {
                     @Override
-                    public void success(GitModel GitModel, Response response) {
-                        //we get json object from github server to our POJO or model class
+                    public void success(GitModel gitModel, Response response) {
 
-                        responseText.setText("Github Name :" + GitModel.getName() + "\nWebsite :" + GitModel.getBlog() + "\nCompany Name :" + GitModel.getCompany());
+                        //Display successful response results
+                        //TODO use string resources instead
+                        responseText.setText("GitHub Name: " + gitModel.getName()
+                                + "\nWebsite: " + gitModel.getBlog()
+                                + "\nCompany Name: " + gitModel.getCompany());
 
-                        progressBar.setVisibility(View.INVISIBLE);                               //disable progressbar
+                        progressBar.setVisibility(View.INVISIBLE); //Disable progressbar
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
+                        // Display error message if the request fails
                         responseText.setText(error.getMessage());
-                        progressBar.setVisibility(View.INVISIBLE);                               //disable progressbar
+                        progressBar.setVisibility(View.INVISIBLE); //Disable progressbar
                     }
                 });
             }
