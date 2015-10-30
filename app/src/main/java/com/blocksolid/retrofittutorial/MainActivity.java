@@ -61,15 +61,16 @@ public class MainActivity extends AppCompatActivity {
                         responseText.setText("GitHub Name: " + gitModel.getName()
                                 + "\nWebsite: " + gitModel.getBlog()
                                 + "\nCompany Name: " + gitModel.getCompany());
-
-                        progressBar.setVisibility(View.INVISIBLE); //Disable progressbar
+                        //Hide progressbar when done
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
                         // Display error message if the request fails
                         responseText.setText(error.getMessage());
-                        progressBar.setVisibility(View.INVISIBLE); //Disable progressbar
+                        //Hide progressbar when done
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 });
             }
