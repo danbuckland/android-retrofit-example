@@ -2,9 +2,11 @@ package com.blocksolid.retrofittutorial;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -40,39 +42,18 @@ public class MainActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = editText.getText().toString();
-                progressBar.setVisibility(View.VISIBLE);
+                searchForUser();
+            }
+        });
 
-                //Retrofit section starts here...
-                //Create an adapter for retrofit with base url
-                RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(API).build();
-
-                //Create a service for adapter using the GET class
-                GitApi git = restAdapter.create(GitApi.class);
-
-                //Make a request to get a response
-                //Get json object from GitHub server to the POJO/model class
-                git.getFeed(user, new Callback<GitModel>() {
-                    @Override
-                    public void success(GitModel gitModel, Response response) {
-
-                        //Display successful response results
-                        //TODO use string resources instead
-                        responseText.setText("GitHub Name: " + gitModel.getName()
-                                + "\nWebsite: " + gitModel.getBlog()
-                                + "\nCompany Name: " + gitModel.getCompany());
-                        //Hide progressbar when done
-                        progressBar.setVisibility(View.INVISIBLE);
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        // Display error message if the request fails
-                        responseText.setText(error.getMessage());
-                        //Hide progressbar when done
-                        progressBar.setVisibility(View.INVISIBLE);
-                    }
-                });
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    searchForUser();
+                }
+                return handled;
             }
         });
     }
@@ -98,5 +79,41 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void searchForUser() {
+        String user = editText.getText().toString();
+        progressBar.setVisibility(View.VISIBLE);
+
+        //Retrofit section starts here...
+        //Create an adapter for retrofit with base url
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(API).build();
+
+        //Create a service for adapter using the GET class
+        GitApi git = restAdapter.create(GitApi.class);
+
+        //Make a request to get a response
+        //Get json object from GitHub server to the POJO/model class
+        git.getFeed(user, new Callback<GitModel>() {
+            @Override
+            public void success(GitModel gitModel, Response response) {
+
+                //Display successful response results
+                //TODO use string resources instead
+                responseText.setText("GitHub Name: " + gitModel.getName()
+                        + "\nWebsite: " + gitModel.getBlog()
+                        + "\nCompany Name: " + gitModel.getCompany());
+                //Hide progressbar when done
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                // Display error message if the request fails
+                responseText.setText(error.getMessage());
+                //Hide progressbar when done
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 }
