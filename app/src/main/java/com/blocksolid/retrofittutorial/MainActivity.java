@@ -15,10 +15,11 @@ import android.widget.TextView;
 import com.blocksolid.retrofittutorial.api.GitApi;
 import com.blocksolid.retrofittutorial.model.GitModel;
 
+import retrofit.Call;
 import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     TextView responseText;
     EditText editText;
     ProgressBar progressBar;
-    String API = "https://api.github.com"; //BASE URL
+    String BASE_URL = "https://api.github.com/"; //BASE URL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,19 +88,24 @@ public class MainActivity extends AppCompatActivity {
 
         //Retrofit section starts here...
         //Create an adapter for retrofit with base url
-        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(API).build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         //Create a service for adapter using the GET class
-        GitApi git = restAdapter.create(GitApi.class);
+        final GitApi gitApi = retrofit.create(GitApi.class);
 
         //Make a request to get a response
         //Get json object from GitHub server to the POJO/model class
-        git.getFeed(user, new Callback<GitModel>() {
-            @Override
-            public void success(GitModel gitModel, Response response) {
 
+        final Call<GitModel> call = gitApi.getFeed(user);
+        call.enqueue(new Callback<GitModel>() {
+            @Override
+            public void onResponse(Response<GitModel> response, Retrofit retrofit) {
                 //Display successful response results
                 //TODO use string resources instead
+                GitModel gitModel = response.body();
                 responseText.setText("GitHub Name: " + gitModel.getName()
                         + "\nWebsite: " + gitModel.getBlog()
                         + "\nCompany Name: " + gitModel.getCompany());
@@ -108,9 +114,9 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void onFailure(Throwable t) {
                 // Display error message if the request fails
-                responseText.setText(error.getMessage());
+                responseText.setText("Error"); //Error needs to be handled properly
                 //Hide progressbar when done
                 progressBar.setVisibility(View.INVISIBLE);
             }
