@@ -12,8 +12,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.blocksolid.retrofittutorial.api.GitApi;
+import com.blocksolid.retrofittutorial.api.GitHubClient;
+import com.blocksolid.retrofittutorial.api.ServiceGenerator;
+import com.blocksolid.retrofittutorial.model.Contributor;
 import com.blocksolid.retrofittutorial.model.GitModel;
+
+import java.io.IOException;
+import java.util.List;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -28,11 +33,15 @@ public class MainActivity extends AppCompatActivity {
     EditText editText;
     ProgressBar progressBar;
     String BASE_URL = "https://api.github.com/"; //BASE URL
+    GitHubClient gitHubClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Create a very simple REST adapter which points the GitHub API endpoint.
+        gitHubClient = ServiceGenerator.createService(GitHubClient.class);
 
         searchBtn = (Button) findViewById(R.id.main_btn_lookup);
         responseText = (TextView) findViewById(R.id.main_text_response);
@@ -43,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchForUser();
+                showContributors();
             }
         });
 
@@ -86,20 +95,10 @@ public class MainActivity extends AppCompatActivity {
         String user = editText.getText().toString();
         progressBar.setVisibility(View.VISIBLE);
 
-        //Retrofit section starts here...
-        //Create an adapter for retrofit with base url
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        //Create a service for adapter using the GET class
-        final GitApi gitApi = retrofit.create(GitApi.class);
-
         //Make a request to get a response
         //Get json object from GitHub server to the POJO/model class
 
-        final Call<GitModel> call = gitApi.getFeed(user);
+        final Call<GitModel> call = gitHubClient.getFeed(user);
         call.enqueue(new Callback<GitModel>() {
             @Override
             public void onResponse(Response<GitModel> response, Retrofit retrofit) {
@@ -121,5 +120,22 @@ public class MainActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
+    }
+
+    public void showContributors() {
+        // Fetch and print a list of the contributors to this library.
+        Call<List<Contributor>> call =
+                gitHubClient.contributors("fs_opensource", "android-boilerplate");
+        List<Contributor> contributors = null;
+
+        try {
+            contributors = call.execute().body();
+        } catch (IOException e) {
+            // handle errors
+        }
+        for (Contributor contributor : contributors) {
+            System.out.println(
+                    contributor.login + " (" + contributor.contributions + ")");
+        }
     }
 }

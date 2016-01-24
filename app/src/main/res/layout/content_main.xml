@@ -32,6 +32,11 @@
             android:id="@+id/main_btn_lookup"
             android:text="@string/main_btn_lookup"/>
     </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showContributors"
+        android:text="Contributors"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
