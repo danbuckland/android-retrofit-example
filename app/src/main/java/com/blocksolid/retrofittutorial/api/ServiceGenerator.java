@@ -1,9 +1,8 @@
 package com.blocksolid.retrofittutorial.api;
 
-import com.squareup.okhttp.OkHttpClient;
-
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
+import okhttp3.OkHttpClient;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Retrofit;
 
 public class ServiceGenerator {
 
