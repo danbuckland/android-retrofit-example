@@ -133,9 +133,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             // handle errors
         }
-        for (Contributor contributor : contributors) {
-            System.out.println(
-                    contributor.login + " (" + contributor.contributions + ")");
+        if (contributors != null) {
+            for (Contributor contributor : contributors) {
+                System.out.println(
+                        contributor.login + " (" + contributor.contributions + ")");
+            }
         }
     }
 }
