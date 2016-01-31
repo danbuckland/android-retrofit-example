@@ -13,25 +13,25 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main"
     tools:context=".MainActivity">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <EditText
-            android:id="@+id/main_edit_username"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:hint="@string/main_edit_hint"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/main_btn_lookup"
-            android:text="@string/main_btn_lookup"/>
-    </LinearLayout>
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal">-->
+        <!--<EditText-->
+            <!--android:id="@+id/main_edit_username"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="@string/main_edit_hint"-->
+            <!--android:imeOptions="actionSearch"-->
+            <!--android:inputType="text"-->
+            <!--/>-->
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/main_btn_lookup"-->
+            <!--android:text="@string/main_btn_lookup"/>-->
+    <!--</LinearLayout>-->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
