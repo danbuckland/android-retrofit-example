@@ -2,10 +2,11 @@ package com.blocksolid.retrofittutorial;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -13,12 +14,11 @@ import android.widget.TextView;
 
 import com.blocksolid.retrofittutorial.api.GitHubClient;
 import com.blocksolid.retrofittutorial.api.ServiceGenerator;
-import com.blocksolid.retrofittutorial.model.Contributor;
-
-import java.io.IOException;
-import java.util.List;
+import com.blocksolid.retrofittutorial.model.GitHubUser;
 
 import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Callback;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,17 +37,17 @@ public class MainActivity extends AppCompatActivity {
         // Create a very simple REST adapter which points the GitHub API endpoint.
         gitHubClient = ServiceGenerator.createService(GitHubClient.class);
 
-        //searchBtn = (Button) findViewById(R.id.main_btn_lookup);
+        searchBtn = (Button) findViewById(R.id.main_btn_lookup);
         responseText = (TextView) findViewById(R.id.main_text_response);
-        //editText = (EditText) findViewById(R.id.main_edit_username);
+        editText = (EditText) findViewById(R.id.main_edit_username);
         progressBar = (ProgressBar) findViewById(R.id.main_progress);
         progressBar.setVisibility(View.INVISIBLE);
 
-        /*
+
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showContributors();
+                searchForUser();
             }
         });
 
@@ -56,12 +56,11 @@ public class MainActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    showContributors();
+                    searchForUser();
                 }
                 return handled;
             }
         });
-        */
     }
 
 
@@ -87,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*
     public void searchForUser() {
         String user = editText.getText().toString();
         progressBar.setVisibility(View.VISIBLE);
@@ -95,13 +93,13 @@ public class MainActivity extends AppCompatActivity {
         //Make a request to get a response
         //Get json object from GitHub server to the POJO/model class
 
-        final Call<GitModel> call = gitHubClient.getFeed(user);
-        call.enqueue(new Callback<GitModel>() {
+        final Call<GitHubUser> call = gitHubClient.getFeed(user);
+        call.enqueue(new Callback<GitHubUser>() {
             @Override
-            public void onResponse(Response<GitModel> response, Retrofit retrofit) {
+            public void onResponse(Response<GitHubUser> response) {
                 //Display successful response results
                 //TODO use string resources instead
-                GitModel gitModel = response.body();
+                GitHubUser gitModel = response.body();
                 responseText.setText("GitHub Name: " + gitModel.getName()
                         + "\nWebsite: " + gitModel.getBlog()
                         + "\nCompany Name: " + gitModel.getCompany());
@@ -117,25 +115,5 @@ public class MainActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
-    }
-    */
-
-    public void showContributors(View view) {
-        // Fetch and print a list of the contributors to this library.
-        Call<List<Contributor>> call =
-                gitHubClient.contributors("danbuckland", "crudecumber");
-        List<Contributor> contributors = null;
-
-        try {
-            contributors = call.execute().body();
-        } catch (IOException e) {
-            // handle errors
-        }
-        if (contributors != null) {
-            for (Contributor contributor : contributors) {
-                Log.d("CONTRIBUTORS",
-                        contributor.login + " (" + contributor.contributions + ")");
-            }
-        }
     }
 }
