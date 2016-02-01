@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blocksolid.retrofittutorial.api.GitHubClient;
 import com.blocksolid.retrofittutorial.api.ServiceGenerator;
@@ -26,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     TextView responseText;
     EditText editText;
     ProgressBar progressBar;
-    String BASE_URL = "https://api.github.com/"; //BASE URL
     GitHubClient gitHubClient;
 
     @Override
@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -98,11 +97,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Response<GitHubUser> response) {
                 //Display successful response results
-                //TODO use string resources instead
                 GitHubUser gitModel = response.body();
-                responseText.setText("GitHub Name: " + gitModel.getName()
-                        + "\nWebsite: " + gitModel.getBlog()
-                        + "\nCompany Name: " + gitModel.getCompany());
+                if (gitModel != null) {
+                    responseText.setText(getString(R.string.main_response_text,
+                            gitModel.getName(),
+                            gitModel.getBlog(),
+                            gitModel.getCompany()));
+                } else {
+                    responseText.setText("");
+                    Toast.makeText(getApplicationContext(),
+                            getString(R.string.main_error_text),
+                            Toast.LENGTH_SHORT).show();
+
+                }
                 //Hide progressbar when done
                 progressBar.setVisibility(View.INVISIBLE);
             }
@@ -110,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Throwable t) {
                 // Display error message if the request fails
-                responseText.setText("Error"); //Error needs to be handled properly
+                responseText.setText(""); //Error needs to be handled properly
                 //Hide progressbar when done
                 progressBar.setVisibility(View.INVISIBLE);
             }
