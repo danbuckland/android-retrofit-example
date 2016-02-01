@@ -13,12 +13,6 @@ public class ServiceGenerator {
     private static HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
     private static Interceptor logging = interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
-//    Retrofit retrofit = new Retrofit.Builder()
-//            .baseUrl(API_BASE_URL)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .client(httpClient)
-//            .build();
-
     private static OkHttpClient httpClient = new OkHttpClient.Builder()
             .addInterceptor(logging)
             .build();
