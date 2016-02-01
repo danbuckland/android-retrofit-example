@@ -11,15 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.blocksolid.retrofittutorial.api.GitApi;
-import com.blocksolid.retrofittutorial.model.GitModel;
+import com.blocksolid.retrofittutorial.api.GitHubClient;
+import com.blocksolid.retrofittutorial.api.ServiceGenerator;
+import com.blocksolid.retrofittutorial.model.GitHubUser;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Callback;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,18 +27,22 @@ public class MainActivity extends AppCompatActivity {
     TextView responseText;
     EditText editText;
     ProgressBar progressBar;
-    String BASE_URL = "https://api.github.com/"; //BASE URL
+    GitHubClient gitHubClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Create a very simple REST adapter which points the GitHub API endpoint.
+        gitHubClient = ServiceGenerator.createService(GitHubClient.class);
+
         searchBtn = (Button) findViewById(R.id.main_btn_lookup);
         responseText = (TextView) findViewById(R.id.main_text_response);
         editText = (EditText) findViewById(R.id.main_edit_username);
         progressBar = (ProgressBar) findViewById(R.id.main_progress);
         progressBar.setVisibility(View.INVISIBLE);
+
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,29 +89,27 @@ public class MainActivity extends AppCompatActivity {
         String user = editText.getText().toString();
         progressBar.setVisibility(View.VISIBLE);
 
-        //Retrofit section starts here...
-        //Create an adapter for retrofit with base url
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        //Create a service for adapter using the GET class
-        final GitApi gitApi = retrofit.create(GitApi.class);
-
         //Make a request to get a response
         //Get json object from GitHub server to the POJO/model class
 
-        final Call<GitModel> call = gitApi.getFeed(user);
-        call.enqueue(new Callback<GitModel>() {
+        final Call<GitHubUser> call = gitHubClient.getFeed(user);
+        call.enqueue(new Callback<GitHubUser>() {
             @Override
-            public void onResponse(Response<GitModel> response, Retrofit retrofit) {
+            public void onResponse(Response<GitHubUser> response) {
                 //Display successful response results
-                //TODO use string resources instead
-                GitModel gitModel = response.body();
-                responseText.setText("GitHub Name: " + gitModel.getName()
-                        + "\nWebsite: " + gitModel.getBlog()
-                        + "\nCompany Name: " + gitModel.getCompany());
+                GitHubUser gitModel = response.body();
+                if (gitModel != null) {
+                    responseText.setText(getString(R.string.main_response_text,
+                            gitModel.getName(),
+                            gitModel.getBlog(),
+                            gitModel.getCompany()));
+                } else {
+                    responseText.setText("");
+                    Toast.makeText(getApplicationContext(),
+                            getString(R.string.main_error_text),
+                            Toast.LENGTH_SHORT).show();
+
+                }
                 //Hide progressbar when done
                 progressBar.setVisibility(View.INVISIBLE);
             }
@@ -116,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Throwable t) {
                 // Display error message if the request fails
-                responseText.setText("Error"); //Error needs to be handled properly
+                responseText.setText(""); //Error needs to be handled properly
                 //Hide progressbar when done
                 progressBar.setVisibility(View.INVISIBLE);
             }
