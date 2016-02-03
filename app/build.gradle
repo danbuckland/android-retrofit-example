@@ -25,10 +25,10 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
 
     // Retrofit & OkHttp
-    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
-    compile 'com.squareup.okhttp3:okhttp:3.0.0-RC1'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.0.0-RC1'
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-SNAPSHOT'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-SNAPSHOT'
+    compile 'com.squareup.okhttp3:okhttp:3.0.1'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
 
     // Unit testing dependencies
     testCompile 'junit:junit:4.12'

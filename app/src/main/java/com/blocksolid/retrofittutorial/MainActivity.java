@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         final Call<GitHubUser> call = gitHubClient.getFeed(user);
         call.enqueue(new Callback<GitHubUser>() {
             @Override
-            public void onResponse(Response<GitHubUser> response) {
+            public void onResponse(Call<GitHubUser> gitHubUserCall, Response<GitHubUser> response) {
                 //Display successful response results
                 GitHubUser gitModel = response.body();
                 if (gitModel != null) {
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<GitHubUser> gitHubUserCall, Throwable t) {
                 // Display error message if the request fails
                 responseText.setText(""); //Error needs to be handled properly
                 //Hide progressbar when done
