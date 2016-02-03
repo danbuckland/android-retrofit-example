@@ -1,5 +1,7 @@
 package com.blocksolid.retrofittutorial.api;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -14,7 +16,8 @@ public class ServiceGenerator {
     private static Interceptor logging = interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
     private static OkHttpClient httpClient = new OkHttpClient.Builder()
-            .addInterceptor(logging)
+            //.addInterceptor(logging)
+            .addNetworkInterceptor(new StethoInterceptor())
             .build();
 
     private static Retrofit.Builder builder =

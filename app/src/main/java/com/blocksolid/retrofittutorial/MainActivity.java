@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.blocksolid.retrofittutorial.api.GitHubClient;
 import com.blocksolid.retrofittutorial.api.ServiceGenerator;
 import com.blocksolid.retrofittutorial.model.GitHubUser;
+import com.facebook.stetho.Stetho;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_main);
 
         // Create a very simple REST adapter which points the GitHub API endpoint.
