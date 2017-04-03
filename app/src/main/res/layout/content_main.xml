@@ -32,6 +32,28 @@
             android:id="@+id/main_btn_lookup"
             android:text="@string/main_btn_lookup"/>
     </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/rel_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rel_gson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GSON"/>
+
+        <RadioButton
+            android:id="@+id/rel_jackson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:text="Jackson"/>
+
+    </RadioGroup>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

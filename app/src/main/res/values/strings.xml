@@ -3,6 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="main_btn_lookup">Lookup</string>
     <string name="main_edit_hint">Enter a GitHub username</string>
-    <string name="main_response_text">GitHub Name: %1$s\nWebsite: %2$s\nCompany Name: %3$s</string>
+    <string name="main_response_text">GitHub Name: %1$s\nWebsite: %2$s\nCompany Name: %3$s\nLocation: %4$s\nEmail: %5$s</string>
     <string name="main_error_text">User not found</string>
 </resources>

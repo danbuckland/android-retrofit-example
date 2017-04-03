@@ -1,15 +1,18 @@
 package com.blocksolid.retrofittutorial;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +21,8 @@ import com.blocksolid.retrofittutorial.api.ServiceGenerator;
 import com.blocksolid.retrofittutorial.model.GitHubUser;
 
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editText;
     ProgressBar progressBar;
     GitHubClient gitHubClient;
+    RadioGroup radioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +39,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Create a very simple REST adapter which points the GitHub API endpoint.
-        gitHubClient = ServiceGenerator.createService(GitHubClient.class);
 
         searchBtn = (Button) findViewById(R.id.main_btn_lookup);
         responseText = (TextView) findViewById(R.id.main_text_response);
         editText = (EditText) findViewById(R.id.main_edit_username);
         progressBar = (ProgressBar) findViewById(R.id.main_progress);
+        radioGroup = (RadioGroup) findViewById(R.id.rel_radio_group);
         progressBar.setVisibility(View.INVISIBLE);
 
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchForUser();
+                RadioButton rb = (RadioButton) radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());
+                if (radioGroup.getCheckedRadioButtonId() == -1){
+                    Toast.makeText(MainActivity.this, "Please select an option", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    gitHubClient = ServiceGenerator.createService(GitHubClient.class,rb.getText().toString());
+                    searchForUser();
+                }
             }
         });
 
@@ -59,6 +70,17 @@ public class MainActivity extends AppCompatActivity {
                     searchForUser();
                 }
                 return handled;
+            }
+        });
+
+        radioGroup.clearCheck();
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                RadioButton rb = (RadioButton) group.findViewById(checkedId);
+                if (null != rb && checkedId > -1) {
+                    Toast.makeText(MainActivity.this, rb.getText(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -102,7 +124,9 @@ public class MainActivity extends AppCompatActivity {
                     responseText.setText(getString(R.string.main_response_text,
                             gitModel.getName(),
                             gitModel.getBlog(),
-                            gitModel.getCompany()));
+                            gitModel.getCompany(),
+                            gitModel.getLocation(),
+                            gitModel.getEmail()));
                 } else {
                     responseText.setText("");
                     Toast.makeText(getApplicationContext(),
