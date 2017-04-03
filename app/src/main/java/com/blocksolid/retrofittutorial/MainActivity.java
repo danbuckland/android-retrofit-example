@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideSoftKeyboard();
                 RadioButton rb = (RadioButton) radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());
                 if (radioGroup.getCheckedRadioButtonId() == -1){
                     Toast.makeText(MainActivity.this, "Please select an option", Toast.LENGTH_SHORT).show();
@@ -146,5 +148,12 @@ public class MainActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
+    }
+
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
     }
 }
