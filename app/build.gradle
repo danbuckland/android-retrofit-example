@@ -33,24 +33,24 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:23.1.1'
+    implementation 'com.android.support:design:23.1.1'
 
     // Retrofit & OkHttp
-    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
-    compile 'com.squareup.okhttp3:okhttp:3.0.0-RC1'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.0.0-RC1'
+    implementation 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
+    implementation 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
+    implementation 'com.squareup.okhttp3:okhttp:3.0.0-RC1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.0.0-RC1'
 
     //Jackson
-    compile 'com.fasterxml.jackson.core:jackson-core:2.7.3'
-    compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.3'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.3'
-    compile files('libs/converter-jackson-2.2.0.jar')
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.7.3'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.7.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.7.3'
+    implementation files('libs/converter-jackson-2.2.0.jar')
 
     // Unit testing dependencies
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
     // Set this dependency if you want to use Mockito
     // testCompile 'org.mockito:mockito-core:1.10.19'
     // Set this dependency if you want to use Hamcrest matching
