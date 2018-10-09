@@ -5,6 +5,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class ServiceGenerator {
 
@@ -22,8 +23,20 @@ public class ServiceGenerator {
                     .baseUrl(API_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create());
 
-    public static <S> S createService(Class<S> serviceClass) {
-        Retrofit retrofit = builder.client(httpClient).build();
+    private static Retrofit.Builder jacksonBuilder =
+            new Retrofit.Builder()
+                    .baseUrl(API_BASE_URL)
+                    .addConverterFactory(JacksonConverterFactory.create());
+
+    public static <S> S createService(Class<S> serviceClass,String type) {
+        Retrofit retrofit = null;
+        if (type.equals("GSON")){
+            retrofit = builder.client(httpClient).build();
+        }
+        else {
+            retrofit = jacksonBuilder.client(httpClient).build();
+        }
+
         return retrofit.create(serviceClass);
     }
 }
